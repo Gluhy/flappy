@@ -22,6 +22,7 @@ randomPipe()
 
 let pipe2x = cw
 let pipe2y = pipe1height + 150
+let point = 0
 
 function table(){
     ctx.fillStyle = "gray"
@@ -66,7 +67,7 @@ function newpipe(){
 }
 
 function randomPipe(){
-    pipe1height = (Math.random()* (400-100+1))+100
+    pipe1height = (Math.random()* (400-50+1))+50
 }
 
 function colision(){
@@ -78,6 +79,7 @@ function colision(){
         ctx.fillStyle = "yellow"
         ctx.textAlign = "center"
         ctx.fillText("Jebłeś w rurę", cw/2,ch/2)
+        clearInterval(pointsint)
     }
     else if(playerXPosition + playerSize >= pipe2x && playerYPosition + playerSize > pipe2y){
         clearInterval(interval)
@@ -87,6 +89,7 @@ function colision(){
         ctx.fillStyle = "yellow"
         ctx.textAlign = "center"
         ctx.fillText("Jebłeś w rurę", cw/2,ch/2)
+        clearInterval(pointsint)
     }
 
     else if(playerYPosition <= 0 || playerYPosition + playerSize >= ch){
@@ -97,10 +100,21 @@ function colision(){
         ctx.fillStyle = "yellow"
         ctx.textAlign = "center"
         ctx.fillText("Jebłeś w ścianę", cw/2,ch/2)
+        clearInterval(pointsint)
+        setInterval(interval)
     }
 }
 
+function points(){
+    point++
+}
 
+function pointsdis(){
+    ctx.font = "10px Comic Sans MS"
+    ctx.fillStyle = "black"
+    ctx.textAlign = "center"
+    ctx.fillText(`Ilość pkt: ${point}`, cw*.85,ch*.05)
+}
 
 
 
@@ -114,7 +128,9 @@ function game(){
     pipe()
     newpipe()
     colision()
+    pointsdis()
 }
 
 
 const interval = setInterval(game, 1000/60)
+const pointsint = setInterval(points,1000)
